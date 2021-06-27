@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: selenium-utils
+
+selenium:
+  driver-system-property: webdriver.chrome.driver
+  driver-path: chromedriver.exe
+  run-headless: false
+  start-maximized: true
