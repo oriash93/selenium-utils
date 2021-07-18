@@ -17,7 +17,9 @@
     <properties>
         <java.version>11</java.version>
         <selenium.version>3.141.59</selenium.version>
-        <spring-boot-starter.version>2.4.5</spring-boot-starter.version>
+        <commons-ui.version>2.11.0</commons-ui.version>
+        <spring-boot.version>2.4.5</spring-boot.version>
+        <spring-cloud.version>3.0.3</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -34,22 +36,27 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.30</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring-boot-starter.version}</version>
+            <version>${spring-boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <version>${spring-cloud.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+            <version>${spring-cloud.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-ui.version}</version>
         </dependency>
     </dependencies>
 </project>

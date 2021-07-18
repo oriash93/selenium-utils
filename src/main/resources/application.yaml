@@ -3,7 +3,8 @@ spring:
     name: selenium-utils
 
 selenium:
-  driver-system-property: webdriver.chrome.driver
-  driver-path: chromedriver.exe
-  run-headless: false
-  start-maximized: true
+  headless: true
+  maximized: true
+  fluent-wait:
+    polling-interval-ms: 500
+    timeout-interval-ms: 10000

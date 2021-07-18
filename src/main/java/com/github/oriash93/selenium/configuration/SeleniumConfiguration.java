@@ -1,5 +1,6 @@
 package com.github.oriash93.selenium.configuration;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,36 +11,51 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
-
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.time.Duration;
 
 @Configuration
 public class SeleniumConfiguration {
+    private static final String DRIVER_SYSTEM_PROPERTY = "webdriver.chrome.driver";
+    private static final String DRIVER_DIR_PATH = "driver";
+    private static final String DRIVER_EXE_PATH = "chromedriver.exe";
+    private static final String START_MAXIMIZED_FLAG = "--start-maximized";
 
-    @Value("${selenium.driver-system-property}")
-    private String driverSystemProperty;
+    @Value("${selenium.headless:true}")
+    private boolean headless;
 
-    @Value("${selenium.driver-path}")
-    private String driverPath;
+    @Value("${selenium.maximized:true}")
+    private boolean maximized;
 
-    @Value("${selenium.run-headless}")
-    private boolean isHeadless;
+    @Value("${selenium.fluent-wait.polling-interval-ms:500}")
+    private long fluentWaitPollingInterval;
 
-    @Value("${selenium.start-maximized}")
-    private boolean isMaximized;
+    @Value("${selenium.fluent-wait.timeout-interval-ms:10000}")
+    private long fluentWaitTimeoutInterval;
 
     @PostConstruct
-    public void init() {
-        String path = getClass().getClassLoader().getResource(driverPath).getPath();
-        System.setProperty(driverSystemProperty, path);
+    public void init() throws IOException {
+        URL resource = getClass().getClassLoader().getResource(DRIVER_EXE_PATH);
+        File driverDirectory = new File(DRIVER_DIR_PATH);
+        if (!driverDirectory.exists()) {
+            driverDirectory.mkdirs();
+        }
+        File chromeDriver = new File(DRIVER_DIR_PATH + File.separator + DRIVER_EXE_PATH);
+        if (!chromeDriver.exists()) {
+            chromeDriver.createNewFile();
+            FileUtils.copyURLToFile(resource, chromeDriver);
+        }
+        System.setProperty(DRIVER_SYSTEM_PROPERTY, chromeDriver.getAbsolutePath());
     }
 
     @Bean
     public ChromeOptions chromeOptions() {
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setHeadless(isHeadless);
-        if (isMaximized) {
-            chromeOptions.addArguments("--start-maximized");
+        chromeOptions.setHeadless(headless);
+        if (maximized) {
+            chromeOptions.addArguments(START_MAXIMIZED_FLAG);
         }
         return chromeOptions;
     }
@@ -57,8 +73,8 @@ public class SeleniumConfiguration {
     @Bean
     public FluentWait<ChromeDriver> fluentWait() {
         return new FluentWait<>(chromeDriver())
-                .pollingEvery(Duration.ofMillis(500))
-                .withTimeout(Duration.ofMillis(10000))
+                .pollingEvery(Duration.ofMillis(fluentWaitPollingInterval))
+                .withTimeout(Duration.ofMillis(fluentWaitTimeoutInterval))
                 .ignoring(NoSuchElementException.class);
     }
 }
