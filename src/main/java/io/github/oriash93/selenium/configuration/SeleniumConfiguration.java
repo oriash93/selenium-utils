@@ -1,4 +1,4 @@
-package com.github.oriash93.selenium.configuration;
+package io.github.oriash93.selenium.configuration;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.NoSuchElementException;
