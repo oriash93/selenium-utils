@@ -43,14 +43,20 @@ public class SeleniumConfiguration {
         URL resource = getClass().getClassLoader().getResource(DRIVER_EXE_PATH);
         File driverDirectory = new File(DRIVER_DIR_PATH);
         if (!driverDirectory.exists()) {
-            driverDirectory.mkdirs();
-            log.info("Web driver directory created in {}", driverDirectory.toPath());
+            if (driverDirectory.mkdirs()) {
+                log.info("Web driver directory created in {}", driverDirectory.getAbsolutePath());
+            } else {
+                log.info("Web driver directory creating failed");
+            }
         }
         File chromeDriver = new File(DRIVER_DIR_PATH + File.separator + DRIVER_EXE_PATH);
         if (!chromeDriver.exists()) {
-            chromeDriver.createNewFile();
-            log.info("Web driver file created in path {}", chromeDriver.toPath());
-            FileUtils.copyURLToFile(resource, chromeDriver);
+            if (chromeDriver.createNewFile()) {
+                log.info("Web driver file created in path {}", chromeDriver.getAbsolutePath());
+                FileUtils.copyURLToFile(resource, chromeDriver);
+            } else {
+                log.info("Web driver file creating failed");
+            }
         }
         log.info("Copying web driver finished");
         System.setProperty(DRIVER_SYSTEM_PROPERTY, chromeDriver.getAbsolutePath());
