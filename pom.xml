@@ -20,6 +20,7 @@
         <commons-ui.version>2.11.0</commons-ui.version>
         <spring-boot.version>2.4.5</spring-boot.version>
         <spring-cloud.version>3.0.3</spring-cloud.version>
+        <slf4j.version>1.7.32</slf4j.version>
     </properties>
 
     <dependencies>
@@ -57,6 +58,18 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-ui.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
     </dependencies>
 

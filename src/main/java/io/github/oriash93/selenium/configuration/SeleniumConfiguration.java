@@ -1,5 +1,6 @@
 package io.github.oriash93.selenium.configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 
+@Slf4j
 @Configuration
 public class SeleniumConfiguration {
     private static final String DRIVER_SYSTEM_PROPERTY = "webdriver.chrome.driver";
@@ -37,16 +39,20 @@ public class SeleniumConfiguration {
 
     @PostConstruct
     public void init() throws IOException {
+        log.info("Copying web driver started");
         URL resource = getClass().getClassLoader().getResource(DRIVER_EXE_PATH);
         File driverDirectory = new File(DRIVER_DIR_PATH);
         if (!driverDirectory.exists()) {
             driverDirectory.mkdirs();
+            log.info("Web driver directory created in {}", driverDirectory.toPath());
         }
         File chromeDriver = new File(DRIVER_DIR_PATH + File.separator + DRIVER_EXE_PATH);
         if (!chromeDriver.exists()) {
             chromeDriver.createNewFile();
+            log.info("Web driver file created in path {}", chromeDriver.toPath());
             FileUtils.copyURLToFile(resource, chromeDriver);
         }
+        log.info("Copying web driver finished");
         System.setProperty(DRIVER_SYSTEM_PROPERTY, chromeDriver.getAbsolutePath());
     }
 
