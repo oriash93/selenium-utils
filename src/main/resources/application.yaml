@@ -4,7 +4,6 @@ spring:
 
 selenium:
   headless: true
-  maximized: true
   fluent-wait:
     polling-interval-ms: 500
     timeout-interval-ms: 10000
