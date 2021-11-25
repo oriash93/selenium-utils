@@ -100,6 +100,13 @@
                 </dependencies>
             </plugin>
         </plugins>
+        <extensions>
+            <extension>
+                <groupId>io.packagecloud.maven.wagon</groupId>
+                <artifactId>maven-packagecloud-wagon</artifactId>
+                <version>0.0.4</version>
+            </extension>
+        </extensions>
     </build>
 
     <profiles>
@@ -134,10 +141,13 @@
     </profiles>
     <distributionManagement>
         <repository>
-            <id>github</id>
-            <name>GitHub oriash93 Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/oriash93/selenium-utils</url>
+            <id>packagecloud-travis</id>
+            <url>packagecloud+https://packagecloud.io/oriash93/selenium-utils</url>
         </repository>
+        <snapshotRepository>
+            <id>packagecloud-travis</id>
+            <url>packagecloud+https://packagecloud.io/oriash93/selenium-utils</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <scm>
