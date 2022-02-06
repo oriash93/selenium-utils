@@ -15,7 +15,10 @@
     <description>Selenium Utilities</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>16</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
         <selenium.version>3.141.59</selenium.version>
         <spring-boot.version>2.6.3</spring-boot.version>
         <spring-cloud.version>3.1.0</spring-cloud.version>
